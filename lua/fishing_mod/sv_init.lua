@@ -61,7 +61,7 @@ concommand.Add("fishing_mod_buy_bait", function(ply, command, arguments)
 
 	if fishingmod.ExpToLevel(ply.fishingmod.exp) < data.levelrequired then return end
 	if not fishingmod.Pay(ply, math.Round(data.price*data.multiplier)) then return end
-	
+
 	local bait = ents.Create("prop_physics")
 	bait.data = {}
 	bait.is_bait = true
@@ -75,9 +75,9 @@ concommand.Add("fishing_mod_buy_bait", function(ply, command, arguments)
 	hook.Run("PlayerSpawnedProp", ply, bait:GetModel(), bait)
 
 	if not util.IsValidProp(bait:GetModel():lower()) then bait:PhysicsInitBox(Vector(1,1,1)*-7,Vector(1,1,1)*7) end
-	
+
 	fishingmod.SetBaitInfo(bait)
-	
+
 	fishingmod.HookBait(ply, bait, hooky)
 end)
 
@@ -135,8 +135,8 @@ function fishingmod.IsBait(entity)
 	for name, catch in pairs(fishingmod.CatchTable) do
 		if type(catch.bait) == "table" then
 			for key, bait in pairs(catch.bait) do
-				if string.lower(bait) == model then 
-					return true 
+				if string.lower(bait) == model then
+					return true
 				end
 			end
 		end
@@ -219,29 +219,29 @@ hook.Add("FishingModCaught", "FishingMod:Seagull", function(ply, entity)
 		--print("AFTER RANDOM")
 		local random = VectorRand()*2000
 		random.z = math.abs(random.z)
-		
+
 		local position = ply:GetPos()+random
-		
+
 		if not util.IsInWorld(position) then return end
 		--print("NOT IN WORLD")
-		
+
 		local seagull = ents.Create("fishing_mod_seagull")
 		seagull:SetPos(position)
 		seagull:SetTarget(entity)
 		seagull:SetTargetOwner(ply)
 		seagull:Spawn()
-		
+
 		--print("SUCCESS")
 	end
 end)
 
 function fishingmod.FriedToMultiplier(number)
 	local tri = ((1-math.abs((number/1000-0.5)*2))*8) + 1
-	
+
 	if number > 500 then
 		tri = tri - (number/1000)
 	end
-	
+
 	return tri
 end
 
@@ -254,18 +254,18 @@ timer.Create("FishingMod:Think",1,0,function()
 		if bobber then
 			for key, data in RandomPairs(fishingmod.CatchTable) do
 				if not data.type then continue end
-				
+
 				local chance=math.random(
 								math.max(
-									data.rareness 
-									- 
-									math.min( math.ceil( bobber:GetVelocity():Length()/4 ), data.rareness/2 ) 
+									data.rareness
+									-
+									math.min( math.ceil( bobber:GetVelocity():Length()/4 ), data.rareness/2 )
 									-
 									math.min(
 										math.ceil(
 											rod:GetBobber():GetPos():Distance(ply:GetShootPos()/4)
 										,
-											data.rareness/2 
+											data.rareness/2
 										)
 									,
 										1
@@ -291,19 +291,19 @@ end)
 
 concommand.Add("fishing_mod_request_init", function(ply)
 	if ply.fishing_mod_spawned then return end
-	
+
 	for key, entity in pairs(ents.GetAll()) do
 		if entity:GetNWBool("fishingmod catch") then
 			fishingmod.SetCatchInfo(entity, ply)
 		end
 	end
-	
+
 	for bait, data in pairs(fishingmod.BaitTable) do
 		fishingmod.SetBaitSale(bait, data.multiplier, ply)
 	end
-	
+
 	fishingmod.InitPlayerStats(ply)
-	
+
 	ply.fishing_mod_spawned = true
 end)
 

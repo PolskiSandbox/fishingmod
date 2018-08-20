@@ -3,7 +3,7 @@
 function fishingmod.UpgradeRodLength(ply, amount)
 	if ply.fishingmod.length + amount > fishingmod.MaxRodLength then return end --50 is the maximum rod length allowed
 	local cost = amount * fishingmod.RodLengthPrice --10 is the price per unit
-	if cost > ply.fishingmod.money then return end
+	if cost > ply:GetMoney() then return end
 	fishingmod.TakeMoney(ply, cost)
 	fishingmod.SetRodLength(ply, amount, "add")
 end
@@ -26,7 +26,7 @@ end)
 
 function fishingmod.UpgradeStringLength(ply, amount)
 	local cost = amount * fishingmod.StringLengthPrice
-	if cost > ply.fishingmod.money then return end
+	if cost > ply:GetMoney() then return end
 	fishingmod.TakeMoney(ply, cost)
 	fishingmod.SetRodStringLength(ply, amount, "add")
 end
@@ -50,7 +50,7 @@ end)
 function fishingmod.UpgradeReelSpeed(ply, amount)
 	local cost = amount * fishingmod.ReelSpeedPrice
 	if ply.fishingmod.reel_speed + amount > fishingmod.MaxReelSpeed then return end
-	if cost > ply.fishingmod.money then return end
+	if cost > ply:GetMoney() then return end
 	fishingmod.TakeMoney(ply, cost)
 	fishingmod.SetRodReelSpeed(ply, amount, "add")
 end
@@ -73,7 +73,7 @@ end)
 
 function fishingmod.UpgradeHookForce(ply, amount)
 	local cost = amount * fishingmod.HookForcePrice
-	if cost > ply.fishingmod.money then return end
+	if cost > ply:GetMoney() then return end
 	fishingmod.TakeMoney(ply, cost)
 	fishingmod.SetHookForce(ply, amount, "add")
 end

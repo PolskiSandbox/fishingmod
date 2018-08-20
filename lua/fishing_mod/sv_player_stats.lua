@@ -183,14 +183,11 @@ function fishingmod.GainEXP(ply, amount)
 end
 
 function fishingmod.GiveMoney(ply, amount)
-	ply.fishingmod.money=ply.fishingmod.money or 0
-	ply.fishingmod.money = ply.fishingmod.money + amount
-	fishingmod.SavePlayerInfo(ply, "money", ply.fishingmod.money)
-	fishingmod.UpdatePlayerInfo(ply)
+	ply:AddMoney(amount)
 end
 
 function fishingmod.Pay(ply, money)
-	if ply.fishingmod.money > money then
+	if ply:GetMoney() > money then
 		fishingmod.TakeMoney(ply, money)
 		return true
 	end
@@ -198,9 +195,7 @@ function fishingmod.Pay(ply, money)
 end
 
 function fishingmod.TakeMoney(ply, amount)
-	ply.fishingmod.money = ply.fishingmod.money - amount
-	fishingmod.SavePlayerInfo(ply, "money", ply.fishingmod.money)
-	fishingmod.UpdatePlayerInfo(ply)
+ply:AddMoney(-amount)
 end
 
 function fishingmod.SetRodLength(ply, length, add_or_sub)

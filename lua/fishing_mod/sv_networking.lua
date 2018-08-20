@@ -1,24 +1,24 @@
 function fishingmod.SetCatchInfo(entity, ply)
 	local rp = RecipientFilter()
-	if not ply then 
+	if not ply then
 		rp:AddAllPlayers()
-	else 
-		rp:AddPlayer(ply) 
+	else
+		rp:AddPlayer(ply)
 	end
-	
+
 	entity.data = entity.data or {}
-	
+
 	umsg.Start("Fishingmod:Catch", rp)
 		umsg.Short(entity:EntIndex() or 0)
 		umsg.String(entity.data.friendly or "unknown")
 		umsg.Long(entity.data.caught or 0)
 		umsg.String(
 			entity.data.owner and (
-			type(entity.data.owner)=="string" and entity.data.owner or 
-			
-				IsValid(entity.data.owner) and 
+			type(entity.data.owner)=="string" and entity.data.owner or
+
+				IsValid(entity.data.owner) and
 				entity.data.owner:Nick()
-			) or 
+			) or
 			"Unknown")
 		umsg.Short(entity.data.fried or 0)
 		umsg.Long(entity.data.value or 0)
@@ -27,14 +27,14 @@ end
 
 function fishingmod.SetBaitInfo(entity, ply)
 	local rp = RecipientFilter()
-	if not ply then 
+	if not ply then
 		rp:AddAllPlayers()
-	else 
-		rp:AddPlayer(ply) 
+	else
+		rp:AddPlayer(ply)
 	end
-	
+
 	entity.data = entity.data or {}
-	
+
 	umsg.Start("Fishingmod:Bait", rp)
 		umsg.Short(entity:EntIndex() or 0)
 		--umsg.String(entity.data.friendly or "unknown")
@@ -47,13 +47,13 @@ function fishingmod.UpdatePlayerInfo(ply, spawned)
 		umsg.Entity(ply)
 		umsg.Long(ply.fishingmod.exp)
 		umsg.Long(ply.fishingmod.catches)
-		umsg.Long(ply.fishingmod.money)
+		umsg.String(tostring(ply:GetMoney()))
 		umsg.Char(ply.fishingmod.length)
 		umsg.Char(ply.fishingmod.reel_speed)
 		umsg.Short(ply.fishingmod.string_length)
 		umsg.Short(ply.fishingmod.force)
 		umsg.Bool(spawned or false)
-	umsg.End()	
+	umsg.End()
 end
 
 function fishingmod.SetBaitSale(bait, multiplier, ply)

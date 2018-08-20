@@ -1,5 +1,5 @@
 --Prices for upgrades
- 
+
 fishingmod.RodLengthPrice = 800
 fishingmod.MaxRodLength = 30
 
@@ -65,7 +65,7 @@ end
 for key, catch in pairs(fishingmod.CatchTable) do
 	if catch.bait ~= "none" then
 		fishingmod.BaitTable[key] = {
-			price = math.Round((GetAveragePrice(catch.bait) or catch.value) / 2), 
+			price = math.Round((GetAveragePrice(catch.bait) or catch.value) / 2),
 			models = catch.bait,
 			multiplier = 1,
 			levelrequired = catch.levelrequired
